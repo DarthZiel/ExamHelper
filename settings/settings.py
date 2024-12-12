@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -42,12 +42,17 @@ INSTALLED_APPS = [
     "drf_yasg",
     "rest_framework",
     "djoser",
+    "corsheaders",
     "exam.apps.ExamConfig",
-]
 
+]
+CORS_ALLOW_ALL_ORIGINS = True
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+
+    'corsheaders.middleware.CorsMiddleware',
+
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -137,3 +142,8 @@ REST_FRAMEWORK = {
 }
 #
 AUTH_USER_MODEL = 'exam.CustomUser'
+STATIC_URL = '/static/'  # URL для доступа к статическим файлам
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Папки для поиска статики (в папке проекта)
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Папка, куда будут собраны файлы командой collectstatic
+MEDIA_URL = '/media/'  # URL для доступа к медиа-файлам
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Папка для загрузки медиа-файлов
