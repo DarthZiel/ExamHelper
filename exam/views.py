@@ -15,7 +15,10 @@ class CreateExamCard(generics.CreateAPIView):
     serializer_class = ExamCardSerializer
     queryset = ExamCard.objects.all()
 
+    permission_classes = [IsAuthenticated]
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 class ExamListView(generics.ListAPIView):
     queryset = ExamCard.objects.all()
@@ -39,3 +42,5 @@ class ExamDetailView(generics.RetrieveAPIView):
     #     return ExamCard.objects.filter(user=self.request.user)
 
     lookup_field = 'uuid'  # Поиск по UUID
+
+
