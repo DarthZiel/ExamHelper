@@ -17,19 +17,14 @@ class CreateExamCard(generics.CreateAPIView):
 
 
 
-class ExamListView(APIView):
-    def get(self, request):
-        if request.user.is_authenticated:
-            # Получаем экзамены для текущего пользователя
-            exams = ExamCard.objects.filter(user=request.user)
-            # Сериализуем результат (пустой QuerySet тоже корректно сериализуется)
-            serializer = ExamCardSerializer(exams, many=True)
-            return Response(serializer.data)  # Возвращает пустой массив, если записей нет
-        else:
-            return Response(
-                {"detail": "Authentication credentials were not provided."},
-                status=status.HTTP_401_UNAUTHORIZED
-            )
+class ExamListView(generics.ListAPIView):
+    queryset = ExamCard.objects.all()
+    serializer_class = ExamCardSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        # Получаем записи только для текущего авторизованного пользователя
+        return ExamCardSerializer.objects.filter(user=self.request.user)
 
 class ListCreateQuestions(generics.ListCreateAPIView):
     serializer_class = QuestionSerializer
