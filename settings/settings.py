@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-7@3)mkv&*5pii=99sa%)i4e%%0cw(5_ffhu&oy!n)wr8*gh(xk"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -126,8 +126,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = "static/"
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -143,7 +141,7 @@ REST_FRAMEWORK = {
 #
 AUTH_USER_MODEL = 'exam.CustomUser'
 STATIC_URL = '/static/'  # URL для доступа к статическим файлам
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Папки для поиска статики (в папке проекта)
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Папка, куда будут собраны файлы командой collectstatic
+#STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Папки для поиска статики (в папке проекта)
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')  # Папка, куда будут собраны файлы командой collectstatic
 MEDIA_URL = '/media/'  # URL для доступа к медиа-файлам
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Папка для загрузки медиа-файлов
