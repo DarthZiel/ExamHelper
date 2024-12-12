@@ -43,7 +43,7 @@ class ExamCardDetailSerializer(ModelSerializer):
     results = ResultSerializer(many=True)
     class Meta:
         model = ExamCard
-        fields = ['uuid', 'title', 'questions']  # Укажите необходимые поля
+        fields = ['uuid', 'title', 'questions', 'results']  # Укажите необходимые поля
 
 
 class GetResultSerializer(ModelSerializer):
