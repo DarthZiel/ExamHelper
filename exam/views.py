@@ -22,11 +22,9 @@ class ExamListView(APIView):
         if request.user.is_authenticated:
             # Получаем экзамены для текущего пользователя
             exams = ExamCard.objects.filter(user=request.user)
-            if exams:# Фильтруем по текущему пользователю
-                serializer = ExamCardSerializer(exams, many=True)
-                return Response(serializer.data)
-            else:
-                return Response({'detail': "пусто"})
+            # Сериализуем результат (пустой QuerySet тоже корректно сериализуется)
+            serializer = ExamCardSerializer(exams, many=True)
+            return Response(serializer.data)  # Возвращает пустой массив, если записей нет
         else:
             return Response(
                 {"detail": "Authentication credentials were not provided."},
