@@ -32,3 +32,7 @@ class ExamCardDetailSerializer(ModelSerializer):
     class Meta:
         model = ExamCard
         fields = ['uuid', 'title', 'questions']  # Укажите необходимые поля
+
+
+# class ResultSerializer(ModelSerializer):
+#

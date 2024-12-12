@@ -1,3 +1,4 @@
+from django.core.serializers import serialize
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
@@ -20,9 +21,12 @@ class ExamListView(APIView):
     def get(self, request):
         if request.user.is_authenticated:
             # Получаем экзамены для текущего пользователя
-            exams = ExamCard.objects.filter(user=request.user)  # Фильтруем по текущему пользователю
-            serializer = ExamCardSerializer(exams, many=True)
-            return Response(serializer.data)
+            exams = ExamCard.objects.filter(user=request.user)
+            if exams:# Фильтруем по текущему пользователю
+                serializer = ExamCardSerializer(exams, many=True)
+                return Response(serializer.data)
+            else:
+                return Response({'detail': "пусто"})
         else:
             return Response(
                 {"detail": "Authentication credentials were not provided."},
