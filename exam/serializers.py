@@ -32,11 +32,15 @@ class QuestionSerializer(ModelSerializer):
         model = Question
         fields = '__all__'
 
+class ResultSerializer(ModelSerializer):
+    class Meta:
+        model = Result
+        fields = ['fio', 'mark']
 
 
 class ExamCardDetailSerializer(ModelSerializer):
     questions = QuestionSerializer(many=True)  # Вложенный сериализатор
-
+    results = ResultSerializer(many=True)
     class Meta:
         model = ExamCard
         fields = ['uuid', 'title', 'questions']  # Укажите необходимые поля
