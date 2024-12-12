@@ -47,7 +47,7 @@ class ExamDetailView(generics.RetrieveAPIView):
 class CreateResultView(generics.CreateAPIView):
     serializer_class = GetResultSerializer
     queryset = Result.objects.all()
-    permission_classes = [IsAuthenticated]
+
 
     def perform_create(self, serializer):
         try:
