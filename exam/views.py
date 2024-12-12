@@ -24,7 +24,7 @@ class ExamListView(generics.ListAPIView):
 
     def get_queryset(self):
         # Получаем записи только для текущего авторизованного пользователя
-        return ExamCardSerializer.objects.filter(user=self.request.user)
+        return ExamCard.objects.filter(user=self.request.user)
 
 class ListCreateQuestions(generics.ListCreateAPIView):
     serializer_class = QuestionSerializer

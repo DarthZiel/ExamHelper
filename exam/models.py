@@ -30,7 +30,7 @@ class Question(models.Model):
 
 class Result(models.Model):
     fio = models.CharField(max_length=100)
-    mark = models.CharField(max_length=10)
+    mark = models.CharField(max_length=10, blank=True)
     q_and_a = models.TextField()
     exam_card = models.ForeignKey(
         ExamCard, on_delete=models.CASCADE, related_name="results")
