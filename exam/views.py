@@ -21,7 +21,7 @@ class CreateExamCard(generics.CreateAPIView):
 
 class ExamListView(generics.ListAPIView):
     queryset = ExamCard.objects.all()
-    serializer_class = ExamCardSerializer
+    serializer_class = ExamCardDetailSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):

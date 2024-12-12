@@ -1,6 +1,7 @@
 import requests
 import json
 
+
 # URL API
 url = 'http://0.0.0.0:1234/v1/chat/completions'
 
@@ -13,7 +14,10 @@ headers = {
 data = {
     "model": "llama-3.2-1b-instruct",
     "messages": [
-        {"role": "system", "content": "Always answer in rhymes."},
+        {
+            "role": "system",
+            "content": "You are a teacher. Evaluate the student's performance on a scale of 100 and return only the percentage score."
+        },
         {"role": "user", "content": "Introduce yourself."}
     ],
     "temperature": 0.7,
