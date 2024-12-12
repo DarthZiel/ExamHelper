@@ -23,7 +23,7 @@ class ExamCardSerializer(ModelSerializer):
     # user = UserSerializer()
     class Meta:
         model = ExamCard
-        fields = '__all__'
+        fields = ['title']
 
 
 class QuestionSerializer(ModelSerializer):

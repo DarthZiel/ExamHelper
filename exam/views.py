@@ -5,8 +5,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializers import ExamCardSerializer, QuestionSerializer, ExamCardDetailSerializer
-from .models import ExamCard, Question
+from .serializers import ExamCardSerializer, QuestionSerializer, ExamCardDetailSerializer, GetResultSerializer
+from .models import ExamCard, Question, Result
 
 
 # Create your views here.
@@ -42,5 +42,7 @@ class ExamDetailView(generics.RetrieveAPIView):
     #     return ExamCard.objects.filter(user=self.request.user)
 
     lookup_field = 'uuid'  # Поиск по UUID
+
+
 
 
