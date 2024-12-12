@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-7@3)mkv&*5pii=99sa%)i4e%%0cw(5_ffhu&oy!n)wr8*gh(xk"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     "drf_yasg",
     "rest_framework",
+    "rest_framework.authtoken",
     "djoser",
     "corsheaders",
     "exam.apps.ExamConfig",
@@ -134,12 +135,26 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  # Авторизация через токены
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',  # Только аутентифицированные пользователи
+    ],
 }
-#
-AUTH_USER_MODEL = 'exam.CustomUser'
+
+
+DJOSER = {
+    'LOGIN_FIELD': 'username',  # Используем username для входа
+    'USER_CREATE_PASSWORD_RETYPE': True,  # Требовать повторный ввод пароля
+    'SERIALIZERS': {
+        'user_create': 'djoser.serializers.UserCreateSerializer',
+        'user': 'djoser.serializers.UserSerializer',
+    },
+}
+
+
+
 STATIC_URL = '/static/'  # URL для доступа к статическим файлам
 #STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Папки для поиска статики (в папке проекта)
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')  # Папка, куда будут собраны файлы командой collectstatic
