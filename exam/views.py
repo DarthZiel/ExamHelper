@@ -50,12 +50,12 @@ class CreateResultView(generics.CreateAPIView):
 
 
     def perform_create(self, serializer):
-        try:
-            q_and_a = self.request.data.get('q_and_a')
-            res = evalute(q_and_a)
-            result_instance = serializer.save(mark=res)
-        except:
-            result_instance = serializer.save(mark='50%')
-
-
+        # try:
+        #     q_and_a = self.request.data.get('q_and_a')
+        #     res = evalute(q_and_a)
+        #     result_instance = serializer.save(mark=res)
+        # except:
+        #     result_instance = serializer.save(mark='50%')
+        #
+        result_instance = serializer.save(mark='50%')
         return result_instance
