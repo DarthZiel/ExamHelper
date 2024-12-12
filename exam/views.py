@@ -1,5 +1,5 @@
-from django.core.serializers import serialize
-from drf_yasg.utils import swagger_auto_schema
+import json
+from llamaapi import LlamaAPI
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -46,3 +46,25 @@ class ExamDetailView(generics.RetrieveAPIView):
 
 
 
+class CreateResultView(generics.CreateAPIView):
+    serializer_class = GetResultSerializer
+    queryset = Result.objects.all()
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        q_and_a = self.request.data.get('q_and_a')
+        # external_api_url = 'https://external-api.com/data'  # Укажите URL внешнего API
+        # response = requests.get(external_api_url, params={'title': title, 'date': date})
+        #
+        # if response.status_code == 200:
+        #     external_data = response.json()  # Получаем ответ от внешнего API
+        #
+        #     # Дополняем данные для создания записи
+        #     # Пример: добавляем данные из внешнего API
+        #     extra_field = external_data.get('extra_field', None)
+        #
+        #     # Сохраняем объект с дополнительными данными
+        #     serializer.save(user=self.request.user, extra_field=extra_field)
+        # else:
+        #     # Обработка ошибок, если внешний API вернул ошибку
+        #     raise Exception("Error fetching data from external API")
