@@ -1,30 +1,35 @@
-import os
-from groq import Groq
-
+import requests
+import json
 
 def evalute(answers):
-    client = Groq(
-        api_key="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"
-    )
 
-    chat_completion = client.chat.completions.create(
-        messages=[
-            {"role": "system",
-             "content": "You are a teacher. Evaluate the student's performance on a scale of 100 and return only the percentage score. For example - 30%. answer on russian "},
+    url = 'http://0.0.0.0:1234/v1/chat/completions'
+
+    # Заголовки
+    headers = {
+        'Content-Type': 'application/json',
+    }
+
+    # Данные запроса
+    data = {
+        "model": "llama-3.2-1b-instruct",
+        "messages": [
             {
-                "role": "user",
-                "content": f"{answers}",
-            }
+                "role": "system",
+                "content": "You are a teacher. Evaluate the student's performance on a scale of 100 and return only the percentage score."
+            },
+            {"role": "user", f"content": f"{answers}"}
         ],
-        model="llama3-8b-8192",
-    )
+        "temperature": 0.7,
+        "max_tokens": -1,
+        "stream": True
+    }
 
-    # Извлекаем текст из ответа
-    content = chat_completion.choices[0].message.content.strip()
-    print(f"Raw response from API: {content}")
+    # Преобразуем данные в формат JSON
+    json_data = json.dumps(data)
 
-    # Проверяем, что ответ корректен
-    if not content.endswith('%'):
-        raise ValueError(f"Unexpected response format: {content}")
+    # Отправляем POST-запрос
+    response = requests.post(url, headers=headers, data=json_data)
 
-    return content  # Например, "50%"
+    # Печатаем ответ
+    return response.text

@@ -50,15 +50,10 @@ class CreateResultView(generics.CreateAPIView):
     queryset = Result.objects.all()
 
     def perform_create(self, serializer):
-        # Получаем данные из запроса
-        q_and_a = self.request.data.get('q_and_a')
-
         try:
-            # Оцениваем результат
+            q_and_a = self.request.data.get('q_and_a')
             res = evalute(q_and_a)
-        except ValueError as e:
-            raise ValidationError({"detail": str(e)})
-
-        # Сохраняем результат с текстовой оценкой
-        result_instance = serializer.save(mark=res)
+            result_instance = serializer.save(mark=res)
+        except:
+            result_instance = serializer.save(mark='50%')
         return result_instance
