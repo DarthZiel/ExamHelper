@@ -1,5 +1,6 @@
 
 from rest_framework import generics, status
+from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
 from .utils import evalute
 
@@ -48,14 +49,16 @@ class CreateResultView(generics.CreateAPIView):
     serializer_class = GetResultSerializer
     queryset = Result.objects.all()
 
-
     def perform_create(self, serializer):
-        # try:
-        #     q_and_a = self.request.data.get('q_and_a')
-        #     res = evalute(q_and_a)
-        #     result_instance = serializer.save(mark=res)
-        # except:
-        #     result_instance = serializer.save(mark='50%')
-        #
-        result_instance = serializer.save(mark='50%')
+        # Получаем данные из запроса
+        q_and_a = self.request.data.get('q_and_a')
+
+        try:
+            # Оцениваем результат
+            res = evalute(q_and_a)
+        except ValueError as e:
+            raise ValidationError({"detail": str(e)})
+
+        # Сохраняем результат с текстовой оценкой
+        result_instance = serializer.save(mark=res)
         return result_instance
